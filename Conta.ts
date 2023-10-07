@@ -1,17 +1,17 @@
 class Conta {
-  private numeroAgencia: string;
   private numeroConta: string;
+  private numeroAgencia: string;
   private saldo: number;
   private cliente: Cliente;
 
   constructor(
-    numeroAgencia: string,
     numeroConta: string,
+    numeroAgencia: string,
     saldo: number,
     cliente: Cliente
   ) {
-    this.numeroAgencia = numeroAgencia;
     this.numeroConta = numeroConta;
+    this.numeroAgencia = numeroAgencia;
     this.saldo = saldo;
     this.cliente = cliente;
   }

@@ -17,5 +17,4 @@ class Conta {
     this.cliente = cliente;
     this.transacao = new Transacao();
   }
-  
 }

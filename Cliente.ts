@@ -4,6 +4,7 @@ class Cliente {
   private contas: Conta[]; // Lista de contas
   private dataNascimento: string;
   private endereco: Endereco;
+  static getNome: any;
 
   constructor(
     nome: string,
@@ -16,5 +17,12 @@ class Cliente {
     this.dataNascimento = dataNascimento;
     this.endereco = endereco;
     this.contas = [];
+  }
+  public getNome(): string {
+    return this.nome;
+  }
+
+  public setNome(nome: string): void {
+    this.nome = nome;
   }
 }

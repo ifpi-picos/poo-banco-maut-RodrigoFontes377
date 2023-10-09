@@ -5,7 +5,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-class App {
+export class App {
   constructor() {
     // Criação do cliente
     console.log(
@@ -29,5 +29,3 @@ class App {
     );
   }
 }
-
-new App();

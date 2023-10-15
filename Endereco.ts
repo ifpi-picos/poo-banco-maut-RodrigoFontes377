@@ -1,27 +1,40 @@
-class Endereco {
-  private rua: string;
-  private bairro: string;
-  private numero: string;
-  private cidade: string;
-  private estado: string;
-  private CEP: string;
-  private pais: string;
-
+export class Endereco {
   constructor(
-    rua: string,
-    bairro: string,
-    numero: string,
-    cidade: string,
-    estado: string,
-    CEP: string,
-    pais: string
-  ) {
-    this.rua = rua;
-    this.bairro = bairro;
-    this.numero = numero;
-    this.cidade = cidade;
-    this.estado = estado;
-    this.CEP = CEP;
-    this.pais = pais;
+    public rua: string,
+    public numero: string,
+    public complemento: string,
+    public bairro: string,
+    public cidade: string,
+    public estado: string,
+    public cep: string
+  ) {}
+
+  getRua() {
+    return this.rua;
+  }
+
+  getNumero() {
+    return this.numero;
+  }
+
+  getComplemento() {
+    return this.complemento;
+  }
+
+  getBairro() {
+    return this.bairro;
+  }
+
+  getCidade() {
+    return this.cidade;
+  }
+
+  getEstado() {
+    return this.estado;
+  }
+
+
+  getCEP() {
+    return this.cep;
   }
 }

@@ -2,7 +2,6 @@ export class Endereco {
   constructor(
     public rua: string,
     public numero: string,
-    public complemento: string,
     public bairro: string,
     public cidade: string,
     public estado: string,
@@ -17,10 +16,6 @@ export class Endereco {
     return this.numero;
   }
 
-  getComplemento() {
-    return this.complemento;
-  }
-
   getBairro() {
     return this.bairro;
   }
@@ -32,7 +27,6 @@ export class Endereco {
   getEstado() {
     return this.estado;
   }
-
 
   getCEP() {
     return this.cep;

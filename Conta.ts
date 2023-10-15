@@ -37,4 +37,9 @@ export class Conta {
   getCliente(): Cliente {
     return this.cliente;
   }
+  depositar(valor: number): void {
+    this.saldo += valor;
+    this.transacao.adicionarTransacao(`Depósito de R$${valor}`);
+    console.log('Depósito concluído com êxito');
+  }
 }

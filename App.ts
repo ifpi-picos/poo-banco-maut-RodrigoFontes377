@@ -18,21 +18,12 @@ class App {
     const dataNascimento = prompt("Data de Nascimento: ");
     const rua = prompt("Rua: ");
     const numero = prompt("Número: ");
-    const complemento = prompt("Complemento: ");
     const bairro = prompt("Bairro: ");
     const cidade = prompt("Cidade: ");
     const estado = prompt("Estado: ");
     const CEP = prompt("CEP: ");
 
-    const endereco = new Endereco(
-      rua,
-      numero,
-      complemento,
-      bairro,
-      cidade,
-      estado,
-      CEP
-    );
+    const endereco = new Endereco(rua, numero, bairro, cidade, estado, CEP);
     const cliente = new Cliente(nome, cpf, dataNascimento, endereco);
     const conta = new Conta("001", "001", 0, cliente);
     this.exibirMenu(cliente, conta);
@@ -40,16 +31,16 @@ class App {
 
   exibirMenu(cliente: Cliente, conta: Conta) {
     while (true) {
-      console.log("\n//-- Banco Maut --//");
-      console.log("Escolha uma operação:");
-      console.log("1 - Exibir informações");
-      console.log("2 - Ver Saldo");
-      console.log("3 - Depositar");
-      console.log("4 - Sacar");
-      console.log("5 - Transferir");
-      console.log("6 - Exibir Extrato");
-      console.log("7 - Alterar Dados");
-      console.log("8 - Sair");
+      console.log("\n##### Banco Maut #####");
+      console.log("...Escolha uma operação:");
+      console.log("1 . Exibir informações");
+      console.log("2 . Ver Saldo");
+      console.log("3 . Depositar");
+      console.log("4 . Sacar");
+      console.log("5 . Transferir");
+      console.log("6 . Exibir Extrato");
+      console.log("7 . Alterar Dados");
+      console.log("8 . Sair");
 
       const opcaoStr = prompt("Opção: ");
       const opcao = parseInt(opcaoStr);
@@ -70,16 +61,16 @@ class App {
             endereco.getRua() +
               ", N°" +
               endereco.getNumero() +
-              ", Complemento: " +
-              endereco.getComplemento()
-          );
-          console.log(
-            endereco.getBairro() +
               ", " +
-              endereco.getCidade() +
-              ", " +
-              endereco.getEstado()
+              console.log(
+                endereco.getBairro() +
+                  ", " +
+                  endereco.getCidade() +
+                  ", " +
+                  endereco.getEstado()
+              )
           );
+
           console.log("CEP: " + endereco.getCEP());
           break;
 
@@ -88,11 +79,18 @@ class App {
           break;
 
         case 8:
-          console.log("Até Mais, Espero que tenha gostado!");
+          console.log("Até logo!");
           return;
 
         default:
           console.log("Opção inválida. Tente novamente.");
+          break;
+
+        case 3:
+          console.log("\n### Depósito ###");
+          const valorDepositoStr = prompt("Valor a depositar: R$");
+          const valorDeposito = parseFloat(valorDepositoStr);
+          conta.depositar(valorDeposito);
           break;
       }
     }

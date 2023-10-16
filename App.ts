@@ -92,6 +92,13 @@ class App {
           const valorDeposito = parseFloat(valorDepositoStr);
           conta.depositar(valorDeposito);
           break;
+
+          case 4:
+          console.log("\n//-- Saque --//");
+          const valorSaqueStr = prompt("Valor a sacar: R$");
+          const valorSaque = parseFloat(valorSaqueStr);
+          conta.sacar(valorSaque);
+          break;
       }
     }
   }

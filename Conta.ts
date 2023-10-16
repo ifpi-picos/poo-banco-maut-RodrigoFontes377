@@ -40,6 +40,15 @@ export class Conta {
   depositar(valor: number): void {
     this.saldo += valor;
     this.transacao.adicionarTransacao(`Depósito de R$${valor}`);
-    console.log('Depósito concluído com êxito');
+    console.log("Depósito concluído com êxito");
+  }
+  sacar(valor: number): void {
+    if (valor <= this.saldo) {
+      this.saldo -= valor;
+      this.transacao.adicionarTransacao(`Saque de R$${valor}`);
+      console.log("Saque concluído com êxito");
+    } else {
+      console.log("Saldo insuficiente");
+    }
   }
 }

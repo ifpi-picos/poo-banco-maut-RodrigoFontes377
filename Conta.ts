@@ -51,4 +51,14 @@ export class Conta {
       console.log("Saldo insuficiente");
     }
   }
+  transferir(destino: Conta, valor: number): void {
+    if (valor <= this.saldo) {
+      this.saldo -= valor;
+      destino.depositar(valor);
+      this.transacao.adicionarTransacao(`Transferência de R$${valor}`);
+      console.log("Transferência concluída com êxito");
+    } else {
+      console.log("Saldo insuficiente");
+    }
+  }
 }

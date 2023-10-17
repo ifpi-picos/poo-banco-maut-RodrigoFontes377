@@ -25,22 +25,25 @@ class App {
 
     const endereco = new Endereco(rua, numero, bairro, cidade, estado, CEP);
     const cliente = new Cliente(nome, cpf, dataNascimento, endereco);
-    const conta = new Conta("001", "001", 0, cliente);
+    const conta = new Conta("01", "01", 0, cliente);
     this.exibirMenu(cliente, conta);
   }
 
   exibirMenu(cliente: Cliente, conta: Conta) {
     while (true) {
-      console.log("\n##### Banco Maut #####");
-      console.log("...Escolha uma operação:");
-      console.log("1 . Exibir informações");
-      console.log("2 . Ver Saldo");
-      console.log("3 . Depositar");
-      console.log("4 . Sacar");
-      console.log("5 . Transferir");
-      console.log("6 . Exibir Extrato");
-      console.log("7 . Alterar Dados");
-      console.log("8 . Sair");
+      console.log("╔════════════════════════════════╗");
+      console.log("║        Banco Maut - Menu       ║");
+      console.log("╠════════════════════════════════╣");
+      console.log("║ Escolha uma operação:          ║");
+      console.log("║ 1. Exibir informações          ║");
+      console.log("║ 2. Ver Saldo                   ║");
+      console.log("║ 3. Depositar                   ║");
+      console.log("║ 4. Sacar                       ║");
+      console.log("║ 5. Transferir                  ║");
+      console.log("║ 6. Exibir Extrato              ║");
+      console.log("║ 7. Alterar Dados               ║");
+      console.log("║ 8. Sair                        ║");
+      console.log("╚════════════════════════════════╝");
 
       const opcaoStr = prompt("Opção: ");
       const opcao = parseInt(opcaoStr);
@@ -56,17 +59,17 @@ class App {
           console.log("Saldo: R$" + conta.getSaldo());
 
           console.log("\nEndereço do Cliente:");
-          const endereco = cliente.getEndereco();
+          let endereco = cliente.getEndereco();
           console.log(
             endereco.getRua() +
               ", N°" +
               endereco.getNumero() +
-              ", " +
+              "* " +
               console.log(
                 endereco.getBairro() +
-                  ", " +
+                  "* " +
                   endereco.getCidade() +
-                  ", " +
+                  "* " +
                   endereco.getEstado()
               )
           );
@@ -78,14 +81,6 @@ class App {
           console.log("\nSaldo: R$" + conta.getSaldo());
           break;
 
-        case 8:
-          console.log("Até logo!");
-          return;
-
-        default:
-          console.log("Opção inválida. Tente novamente.");
-          break;
-
         case 3:
           console.log("\n### Depósito ###");
           const valorDepositoStr = prompt("Valor a depositar: R$");
@@ -93,11 +88,52 @@ class App {
           conta.depositar(valorDeposito);
           break;
 
-          case 4:
-          console.log("\n//-- Saque --//");
+        case 4:
+          console.log("\n*** Saque ***");
           const valorSaqueStr = prompt("Valor a sacar: R$");
           const valorSaque = parseFloat(valorSaqueStr);
           conta.sacar(valorSaque);
+          break;
+
+        case 5:
+          console.log("\n//-- Transferência --//");
+          const numeroAgenciaDestino = prompt("Número da Agência de Destino: ");
+          const numeroContaDestino = prompt("Número da Conta de Destino: ");
+          const valorTransferenciaStr = prompt("Valor a transferir: R$");
+          const valorTransferencia = parseFloat(valorTransferenciaStr);
+
+          const eendereco = new Endereco(
+            "123",
+            "Avenida dos Pássaros",
+            "Jardim Primavera",
+            "Rio de Janeiro",
+            "RJ",
+            "23456-789"
+          );
+
+          const clienteDestino = new Cliente(
+            "Carlos Pereira",
+            "555.111.888-22",
+            "10/12/1980",
+            eendereco
+          );
+
+          const destino = new Conta(
+            numeroAgenciaDestino,
+            numeroContaDestino,
+            valorTransferencia,
+            clienteDestino
+          );
+
+          conta.transferir(destino, valorTransferencia);
+          break;
+
+        case 8:
+          console.log("Até logo!");
+          return;
+
+        default:
+          console.log("Opção inválida. Tente novamente.");
           break;
       }
     }

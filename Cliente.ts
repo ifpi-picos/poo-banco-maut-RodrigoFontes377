@@ -6,7 +6,7 @@ export class Cliente {
   private CPF: string;
   private dataNascimento: string;
   private endereco: Endereco;
-  private contas: Conta[]; // Lista de contas associadas ao cliente
+  private contas: Conta[];
 
   constructor(
     nome: string,

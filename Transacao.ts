@@ -1,16 +1,20 @@
 export class Transacao {
-  transacoes: string[];
+  private tipo: string;
+  private valor: number;
+  private data: Date;
 
-  constructor() {
-    this.transacoes = [];
+  constructor(tipo: string, valor: number) {
+    this.tipo = tipo;
+    this.valor = valor;
+    this.data = new Date();
   }
-
-  adicionarTransacao(mensagem: string): void {
-    this.transacoes.push(mensagem);
+  public getTipo() {
+    return this.tipo;
   }
-
- 
-  getTransacoes(): string[] {
-    return this.transacoes;
-    }
+  public getValor() {
+    return this.valor;
+  }
+  public getData() {
+    return this.data;
+  }
 }

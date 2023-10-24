@@ -4,14 +4,14 @@ import { Endereco } from "./Endereco";
 export class Cliente {
   private nome: string;
   private CPF: string;
-  private dataNascimento: string;
+  private dataNascimento: Date;
   private endereco: Endereco;
   private contas: Conta[];
 
   constructor(
     nome: string,
     CPF: string,
-    dataNascimento: string,
+    dataNascimento: Date,
     endereco: Endereco
   ) {
     this.nome = nome;
@@ -32,12 +32,12 @@ export class Cliente {
   public getCPF(): string {
     return this.CPF;
   }
-
-  public getDataNascimento(): string {
+  
+  public getDataNascimento(): Date {
     return this.dataNascimento;
   }
 
-  public setDataNascimento(dataNascimento: string): void {
+  public setDataNascimento(dataNascimento: Date): void {
     this.dataNascimento = dataNascimento;
   }
 

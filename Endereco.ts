@@ -1,34 +1,61 @@
 export class Endereco {
-  constructor(
-    public rua: string,
-    public numero: string,
-    public bairro: string,
-    public cidade: string,
-    public estado: string,
-    public cep: string
-  ) {}
+  private logradouro: string;
+  private numero: number;
+  private bairro: string;
+  private cidade: string;
+  private UF: string;
 
-  getRua() {
-    return this.rua;
+  constructor(
+    logradouro: string,
+    numero: number,
+    bairro: string,
+    cidade: string,
+    UF: string
+  ) {
+    this.logradouro = logradouro;
+    this.numero = numero;
+    this.bairro = bairro;
+    this.cidade = cidade;
+    this.UF = UF;
   }
 
-  getNumero() {
+  public getLogradouro(): string {
+    return this.logradouro;
+  }
+
+  public setLogradouro(logradouro: string): void {
+    this.logradouro = logradouro;
+  }
+
+  public getNumero(): number {
     return this.numero;
   }
 
-  getBairro() {
+  public setNumero(numero: number): void {
+    this.numero = numero;
+  }
+
+  public getBairro(): string {
     return this.bairro;
   }
 
-  getCidade() {
+  public setBairro(bairro: string): void {
+    this.bairro = bairro;
+  }
+
+  public getCidade(): string {
     return this.cidade;
   }
 
-  getEstado() {
-    return this.estado;
+  public setCidade(cidade: string): void {
+    this.cidade = cidade;
   }
 
-  getCEP() {
-    return this.cep;
+  public getUF(): string {
+    return this.UF;
+  }
+
+  public setUF(UF: string): void {
+    this.UF = UF;
   }
 }

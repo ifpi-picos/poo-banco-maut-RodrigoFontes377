@@ -1,6 +1,9 @@
 import { Cliente } from "./Cliente";
 import { Conta } from "./Conta";
 import { Endereco } from "./Endereco";
+import { Notificacao } from "./Notificacao";
+import NotificacaoEmail from "./NotificacaoEmail";
+import NotificacaoSMS from "./NotificacaoSms";
 
 const prompt = require("prompt-sync")();
 
@@ -16,16 +19,16 @@ class App {
     const nome = prompt("Nome: ");
     const cpf = prompt("CPF: ");
     const dataNascimento = prompt("Data de Nascimento: ");
-    const rua = prompt("Rua: ");
+    const logradouro = prompt("Logradouro: ");
     const numero = prompt("Número: ");
     const bairro = prompt("Bairro: ");
     const cidade = prompt("Cidade: ");
-    const estado = prompt("Estado: ");
-    const CEP = prompt("CEP: ");
+    const UF = prompt("UF: ");
 
-    const endereco = new Endereco(rua, numero, bairro, cidade, estado, CEP);
+    const endereco = new Endereco(logradouro, numero, bairro, cidade, UF);
     const cliente = new Cliente(nome, cpf, dataNascimento, endereco);
-    const conta = new Conta("01", "01", 0, cliente);
+    const conta = new Conta(0, cliente, new NotificacaoSMS());
+
     this.exibirMenu(cliente, conta);
   }
 
@@ -42,7 +45,7 @@ class App {
       console.log("║ 5. Transferir                  ║");
       console.log("║ 6. Exibir Extrato              ║");
       console.log("║ 7. Alterar Dados               ║");
-      console.log("║ 8. Sair                        ║");
+      console.log("║ 0. Sair                        ║");
       console.log("╚════════════════════════════════╝");
 
       const opcaoStr = prompt("Opção: ");
@@ -61,20 +64,17 @@ class App {
           console.log("\nEndereço do Cliente:");
           let endereco = cliente.getEndereco();
           console.log(
-            endereco.getRua() +
-              ", N°" +
-              endereco.getNumero() +
+            endereco.getBairro() +
               "* " +
-              console.log(
-                endereco.getBairro() +
-                  "* " +
-                  endereco.getCidade() +
-                  "* " +
-                  endereco.getEstado()
-              )
+              endereco.getCidade() +
+              "* " +
+              endereco.getUF()
+          );
+          console.log(
+            endereco.getLogradouro() + ", N°" + endereco.getNumero() + "* "
           );
 
-          console.log("CEP: " + endereco.getCEP());
+          console.log("UF: " + endereco.getUF());
           break;
 
         case 2:
@@ -103,33 +103,45 @@ class App {
           const valorTransferencia = parseFloat(valorTransferenciaStr);
 
           const eendereco = new Endereco(
-            "123",
             "Avenida dos Pássaros",
+            123,
             "Jardim Primavera",
             "Rio de Janeiro",
-            "RJ",
-            "23456-789"
+            "RJ"
           );
 
+          const dataNascimentoString = "10/12/1980";
+          const parts = dataNascimentoString.split("/");
+          const dia = parseInt(parts[0], 10);
+          const mes = parseInt(parts[1], 10) - 1;
+          const ano = parseInt(parts[2], 10);
+
+          const dataNascimento = new Date(ano, mes, dia);
           const clienteDestino = new Cliente(
             "Carlos Pereira",
             "555.111.888-22",
-            "10/12/1980",
+            dataNascimento,
             eendereco
           );
 
           const destino = new Conta(
-            numeroAgenciaDestino,
-            numeroContaDestino,
             valorTransferencia,
-            clienteDestino
+            clienteDestino,
+            new NotificacaoEmail()
           );
 
           conta.transferir(destino, valorTransferencia);
           break;
 
-        case 8:
-          console.log("Até logo!");
+        case 6:
+          console.log("\nExtrato de Transações:");
+          conta.obterTransacoes().forEach((transacao) => {
+            console.log(transacao);
+          });
+          break;
+
+        case 0:
+          console.log("Espero Que Tenha Gostado Do Sistema Bancário Maut!");
           return;
 
         default:

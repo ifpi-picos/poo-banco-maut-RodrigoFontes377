@@ -23,6 +23,7 @@ export class ContaPoupanca extends Conta {
   public depositar(valor: number): void {
     const rendimentoValor = valor * this.rendimento;
     const valorComRendimento = valor + rendimentoValor;
+    this.saldo += valorComRendimento;
     this.transacao.adicionarTransacao(
       "Depósito com Rendimento",
       valorComRendimento

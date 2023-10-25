@@ -1,3 +1,4 @@
+import { get } from "prompt";
 import { Cliente } from "./Cliente";
 import { Conta } from "./Conta";
 import { ContaCorrente } from "./ContaCorrente";
@@ -13,6 +14,7 @@ class App {
   private contas: Conta[] = [];
   constructor() {
     this.contas = [];
+    this.main();
   }
   public main() {
     const endereco1 = new Endereco(
@@ -43,7 +45,13 @@ class App {
     );
     const notificacao = new NotificacaoEmail();
     const contaPoupanca = new ContaPoupanca(cliente, notificacao);
+    console.log("Dados da conta poupança de teste:",contaPoupanca.getNumeroAgencia(),contaPoupanca.getNumeroConta());
+    this.contas.push(contaPoupanca);
     const contaCorrente = new ContaCorrente(cliente2, notificacao);
+    console.log("Dados da conta Corrente de teste:",contaCorrente.getNumeroAgencia(),contaCorrente.getNumeroConta());
+    this.contas.push(contaCorrente);
+      //contas criadas para facilitar testes
+      
 
     console.log("Bem-vindo ao Banco Maut\n");
     this.mainMenu();

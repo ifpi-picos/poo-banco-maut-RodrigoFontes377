@@ -1,23 +1,31 @@
-class Transacao {
+export class Transacao {
   private tipo: string;
   private valor: number;
-  private data: string;
-  private transacoes: Transacao[] = [];
+  private data: Date;
 
-  constructor(tipo: string, valor: number, data: string) {
+  private transacoes: Transacao[];
+
+  constructor(tipo: string, valor: number) {
     this.tipo = tipo;
     this.valor = valor;
-    this.data = data;
+    this.data = new Date();
+    this.transacoes = [];
   }
+
   public getTipo(): string {
     return this.tipo;
   }
+
   public getValor(): number {
     return this.valor;
   }
 
-  public adicionarTransacao(tipo: string, valor: number, data: string): void {
-    const transacao: Transacao = new Transacao(tipo, valor, data);
+  public getData(): Date {
+    return this.data;
+  }
+
+  public adicionarTransacao(tipo: string, valor: number): void {
+    const transacao = new Transacao(tipo, valor);
     this.transacoes.push(transacao);
   }
 
@@ -26,11 +34,7 @@ class Transacao {
   }
 
   public toString(): string {
-    const valorFormatado = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(this.valor);
-    return `${this.tipo}: ${valorFormatado}, Data: ${this.data}`;
+    return `${this.tipo} de R$${this.valor} às ${this.data}`;
   }
 }
 

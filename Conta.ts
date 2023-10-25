@@ -4,22 +4,22 @@ import { Cliente } from "./Cliente";
 import Notificacao from "./Notificacao";
 import Transacao from "./Transacao";
 
-export class Conta {
-  private numeroAgencia: number;
-  private numeroConta: number;
+export abstract class Conta {
+  protected numeroAgencia: number;
+  protected numeroConta: number;
   protected saldo: number;
-  private cliente: Cliente;
-  private notificacao: Notificacao;
-  private transacao: Transacao;
-
-  constructor(saldo: number, cliente: Cliente, notificacao: Notificacao) {
-    this.numeroAgencia = this.NumeroAleatorio(1000, 9999);
-    this.numeroConta = this.NumeroAleatorio(1000, 9999);
-    this.saldo = saldo;
+  protected cliente: Cliente;
+  protected notificacao: Notificacao;
+  protected transacao: Transacao;
+  constructor(cliente: Cliente, notificacao: Notificacao) {
+    this.numeroAgencia = this.NumeroAleatorio(10, 99);
+    this.numeroConta = this.NumeroAleatorio(10, 99);
+    this.saldo = 0;
     this.cliente = cliente;
     cliente.adicionarConta(this);
     this.notificacao = notificacao;
-    this.transacao = new Transacao("TipoDaTransacao", 100, "DataDaTransacao");
+
+    this.transacao = new Transacao("TipoDaTransacao", 100);
   }
   private NumeroAleatorio(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -45,13 +45,22 @@ export class Conta {
   getNumeroAgencia(): number {
     return this.numeroAgencia;
   }
+  setNumeroAgencia(): number {
+    return (this.numeroAgencia = this.NumeroAleatorio(10, 99));
+  }
 
   getNumeroConta(): number {
     return this.numeroConta;
   }
+  setNumeroConta(): number {
+    return (this.numeroConta = this.NumeroAleatorio(10, 99));
+  }
 
-  getSaldo(): number {
+  public getSaldo(): number {
     return this.saldo;
+  }
+  public setSaldo(novoSaldo: number): void {
+    this.saldo = novoSaldo;
   }
 
   getCliente(): Cliente {
@@ -61,61 +70,35 @@ export class Conta {
     return this.transacao;
   }
 
-  public depositar(valor: number): boolean {
-    this.saldo += valor;
-    this.transacao.adicionarTransacao("Depósito", valor, this.obterData());
+  public abstract depositar(valor: number): void;
 
-    if (this.notificacao !== null) {
-      this.notificacao.enviaNotificacao("Depósito", valor);
-    } else {
-      console.log("Notificação nao configurada nessa conta.");
-    }
+  public abstract sacar(valor: number): void;
 
-    console.log("Depósito concluído");
-    return false;
-  }
-  public sacar(valor: number): number {
-    if (valor <= this.saldo) {
-      this.saldo -= valor;
-      this.transacao.adicionarTransacao("Saque", valor, this.obterData());
+  public abstract transferir(destino: Conta, valor: number): void;
+  //   if (valor <= this.saldo) {
+  //     this.saldo -= valor;
+  //     destino.depositar(valor);
+  //     this.transacao.adicionarTransacao(
+  //       "Transferência",
+  //       valor,
+  //       this.obterData()
+  //     );
 
-      if (this.notificacao !== null) {
-        this.notificacao.enviaNotificacao("Saque", valor);
-      } else {
-        console.log("Notificação nao configurada nessa conta.");
-      }
+  //     this.obterData();
 
-      console.log("Saque concluído");
-    } else {
-      console.log("Sem Saldo na conta");
-    }
+  //     if (this.notificacao !== null) {
+  //       this.notificacao.enviaNotificacao("Transferência", valor);
+  //     } else {
+  //       console.log("Notificação nao configurada nessa conta.");
+  //     }
 
-    return valor;
-  }
-  public transferir(destino: Conta, valor: number): void {
-    if (valor <= this.saldo) {
-      this.saldo -= valor;
-      destino.depositar(valor);
-      this.transacao.adicionarTransacao(
-        "Transferência",
-        valor,
-        this.obterData()
-      );
+  //     console.log("Transferência concluída");
+  //   } else {
+  //     console.log("Sem Saldo na conta");
+  //   }
+  // }
 
-      this.obterData();
-
-      if (this.notificacao !== null) {
-        this.notificacao.enviaNotificacao("Transferência", valor);
-      } else {
-        console.log("Notificação nao configurada nessa conta.");
-      }
-
-      console.log("Transferência concluída");
-    } else {
-      console.log("Sem Saldo na conta");
-    }
-  }
   public obterTransacoes(): Transacao[] {
     return this.transacao.getTransacoes();
-}
+  }
 }

@@ -32,7 +32,7 @@ export class Cliente {
   public getCPF(): string {
     return this.CPF;
   }
-  
+
   public getDataNascimento(): Date {
     return this.dataNascimento;
   }
@@ -45,8 +45,8 @@ export class Cliente {
     return this.endereco;
   }
 
-  public setEndereco(endereco: Endereco): void {
-    this.endereco = endereco;
+  public setEndereco(novoEndereco: Endereco): void {
+    this.endereco = novoEndereco;
   }
 
   public getContas(): Conta[] {

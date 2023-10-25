@@ -46,10 +46,10 @@ class App {
     const contaCorrente = new ContaCorrente(cliente2, notificacao);
 
     console.log("Bem-vindo ao Banco Maut\n");
-    this.mainMenu();
+    this.MenuInicial();
   }
 
-  public mainMenu(): void {
+  public MenuInicial(): void {
     while (true) {
       console.log("Selecione uma opção:");
       console.log("1. Entrar");

@@ -18,6 +18,7 @@ export class Endereco {
     this.cidade = cidade;
     this.UF = UF;
   }
+  
 
   public getLogradouro(): string {
     return this.logradouro;

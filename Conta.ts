@@ -2,15 +2,15 @@
 
 import { Cliente } from "./Cliente";
 import Notificacao from "./Notificacao";
-import { Transacao } from "./Transacao";
+import Transacao from "./Transacao";
 
 export class Conta {
   private numeroAgencia: number;
   private numeroConta: number;
   protected saldo: number;
   private cliente: Cliente;
-  private notificacao!: Notificacao;
-  private transacoes: Transacao[] = [];
+  private notificacao: Notificacao;
+  private transacao: Transacao;
 
   constructor(saldo: number, cliente: Cliente, notificacao: Notificacao) {
     this.numeroAgencia = this.NumeroAleatorio(1000, 9999);
@@ -19,12 +19,13 @@ export class Conta {
     this.cliente = cliente;
     cliente.adicionarConta(this);
     this.notificacao = notificacao;
+    this.transacao = new Transacao("TipoDaTransacao", 100, "DataDaTransacao");
   }
   private NumeroAleatorio(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  private obterData(): string {
+  public obterData(): string {
     const dataAtual = new Date();
     const formato = new Intl.DateTimeFormat("default", {
       day: "2-digit",
@@ -57,12 +58,12 @@ export class Conta {
     return this.cliente;
   }
   getTransacoes() {
-    return this.transacoes;
+    return this.transacao;
   }
 
   public depositar(valor: number): boolean {
     this.saldo += valor;
-    this.transacoes.push(new Transacao("Deposito", valor));
+    this.transacao.adicionarTransacao("Depósito", valor, this.obterData());
 
     if (this.notificacao !== null) {
       this.notificacao.enviaNotificacao("Depósito", valor);
@@ -76,7 +77,7 @@ export class Conta {
   public sacar(valor: number): number {
     if (valor <= this.saldo) {
       this.saldo -= valor;
-      this.transacoes.push(new Transacao("Saque", valor));
+      this.transacao.adicionarTransacao("Saque", valor, this.obterData());
 
       if (this.notificacao !== null) {
         this.notificacao.enviaNotificacao("Saque", valor);
@@ -95,7 +96,11 @@ export class Conta {
     if (valor <= this.saldo) {
       this.saldo -= valor;
       destino.depositar(valor);
-      this.transacoes.push(new Transacao("Trasferencia", valor));
+      this.transacao.adicionarTransacao(
+        "Transferência",
+        valor,
+        this.obterData()
+      );
 
       this.obterData();
 
@@ -110,16 +115,7 @@ export class Conta {
       console.log("Sem Saldo na conta");
     }
   }
-  public exibirTransacoes(): void {
-    console.log(
-      `\n***** Extrato de Transacoes da conta ${this.getNumeroConta()} *****`
-    );
-    this.transacoes.forEach((conta) => {
-      console.log(
-        `Tipo >>> ${conta.getTipo()}
-  Valor >>> R$${conta.getValor()}
-  Data >>> ${conta.getData()}\n************`
-      );
-    });
-  }
+  public obterTransacoes(): Transacao[] {
+    return this.transacao.getTransacoes();
+}
 }
